@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #12081f; /* treasure-hunt dark purple — adjust to final palette */
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 24px 16px 96px;
+}
+
+.screen.is-active {
+  display: block;
+}
+
+.balance-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  background: #12081f;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bottom-nav__item {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+.bottom-nav__item.is-active {
+  color: #ffd54a; /* accent gold — adjust to final palette */
+}
