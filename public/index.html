@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Treasure Hunt</title>
+<link rel="stylesheet" href="/css/style.css" />
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== HOME ===== -->
+    <section class="screen" id="screen-home">
+      <div class="topbar card">
+        <img id="home-avatar" class="avatar" src="" alt="" />
+        <div class="topbar-info">
+          <div id="home-name" class="topbar-name">Adventurer</div>
+          <div class="topbar-sub">BALANCE</div>
+        </div>
+        <div id="home-balance" class="topbar-balance">$0.00</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-box"><span class="stat-icon">🌀</span><span id="stat-spins" class="stat-val">0</span><span class="stat-label">Spins</span></div>
+        <div class="stat-box"><span class="stat-icon">💵</span><span id="stat-usdt" class="stat-val">$0.00</span><span class="stat-label">USDT</span></div>
+        <div class="stat-box"><span class="stat-icon">💎</span><span id="stat-gems" class="stat-val">0</span><span class="stat-label">Gems</span></div>
+        <div class="stat-box"><span class="stat-icon">🤝</span><span id="stat-refers" class="stat-val">0</span><span class="stat-label">Refers</span></div>
+      </div>
+
+      <div class="chest-wrap">
+        <div class="ring-btn ring-tl" data-action="watch-ads"><span>📺</span>Watch Ads</div>
+        <div class="ring-btn ring-bl" data-action="go-task"><span>🗺️</span>Tasks</div>
+        <div class="ring-btn ring-ll" data-action="go-refer"><span>🤝</span>Refer</div>
+
+        <div class="chest" id="chest-btn">
+          <div class="chest-glow"></div>
+          <div class="chest-emoji">🗝️📦</div>
+        </div>
+
+        <div class="ring-btn ring-tr" data-action="open-spin"><span>🎡</span>Spin</div>
+        <div class="ring-btn ring-br" data-action="go-wallet"><span>👛</span>Wallet</div>
+        <div class="ring-btn ring-rr" data-action="go-profile"><span>🙍</span>Profile</div>
+      </div>
+
+      <div class="keys-pill">🔑 <span id="home-keys">0</span> Keys</div>
+      <button class="btn-primary chest-open-btn" id="open-chest-btn">🏆 Tap to Open Chest</button>
+
+      <div class="card invite-banner" data-action="go-refer">
+        <div class="invite-badge">LIFETIME</div>
+        <div class="invite-icon">🎁</div>
+        <div class="invite-title">Invite Friends</div>
+        <div class="invite-sub">EARN LIFETIME COMMISSION</div>
+        <div class="invite-cta">Up to 10% Forever →</div>
+      </div>
+    </section>
+
+    <!-- ===== TASK ===== -->
+    <section class="screen hidden" id="screen-task">
+      <h1 class="screen-title">🗺️ Tasks</h1>
+      <p class="screen-sub">Complete quests, earn treasure</p>
+
+      <div class="tabs" id="task-tabs">
+        <button class="tab active" data-tab="daily">Daily</button>
+        <button class="tab" data-tab="social">Social</button>
+        <button class="tab" data-tab="exclusive">Exclusive</button>
+        <button class="tab" data-tab="partner">Partner</button>
+      </div>
+
+      <div id="task-content"></div>
+    </section>
+
+    <!-- ===== PLAY ===== -->
+    <section class="screen hidden" id="screen-play">
+      <h1 class="screen-title">🎮 Play</h1>
+      <div class="card empty-state">
+        <div class="empty-emoji">⛏️</div>
+        <div class="empty-title">Games coming soon</div>
+        <div class="empty-sub">New treasure games are being buried around the map. Check back soon!</div>
+      </div>
+    </section>
+
+    <!-- ===== REFER ===== -->
+    <section class="screen hidden" id="screen-refer">
+      <h1 class="screen-title">🤝 Refer &amp; Earn</h1>
+      <div class="card refer-intro">📣 Join our channel + community first — referrals only start earning once <b>you've</b> joined too.</div>
+
+      <div class="two-col">
+        <div class="card stat-card"><div class="stat-card-label">Total referrals</div><div id="refer-total" class="stat-card-val">0</div></div>
+        <div class="card stat-card"><div class="stat-card-label">Referral earnings</div><div id="refer-earnings" class="stat-card-val">0 💎</div></div>
+      </div>
+
+      <div class="card commission-card">
+        <div class="commission-title">💰 Withdrawal commission</div>
+        <div class="commission-sub">10% of every withdrawal your referrals make — for as long as they keep withdrawing.</div>
+        <div id="refer-commission-val" class="commission-val">0 💎</div>
+      </div>
+
+      <h3 class="section-heading">How the bonus works</h3>
+      <div class="card steps-card" id="refer-steps"></div>
+
+      <div class="card callout-card">
+        <div class="callout-title">✅ When does a referral become "valid"?</div>
+        <div class="callout-body">A referral counts toward <b>your</b> withdrawals once your friend has completed <b>both</b> — 5 tasks and 20 ads (doesn't matter which order). Joining the channel alone, or just one of the two, isn't enough yet.</div>
+      </div>
+
+      <div class="card share-card">
+        <div class="share-icon">💎</div>
+        <div class="share-label">TOTAL BONUS PER FRIEND</div>
+        <div id="share-bonus" class="share-bonus">0 💎</div>
+        <div class="share-forever-pill">+ 10% of everything they withdraw, forever</div>
+        <div class="share-link-box">
+          <span id="share-link-text">https://t.me/...</span>
+          <button id="copy-link-btn">📋</button>
+        </div>
+        <div class="share-btn-row">
+          <button class="btn-primary" id="share-now-btn">🔗 Share Now</button>
+          <button class="btn-secondary" id="copy-link-btn2">Copy Link</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROFILE ===== -->
+    <section class="screen hidden" id="screen-profile">
+      <h1 class="screen-title">🙍 Profile</h1>
+      <div class="card profile-card">
+        <img id="profile-avatar" class="avatar avatar-lg" src="" alt="" />
+        <div id="profile-name" class="profile-name">Adventurer</div>
+        <div id="profile-username" class="profile-username">@username</div>
+      </div>
+
+      <div class="card balance-list">
+        <div class="balance-row"><span>💵 USDT</span><span id="profile-usdt">$0.00</span></div>
+        <div class="balance-row"><span>💎 Gems</span><span id="profile-gems">0</span></div>
+        <div class="balance-row"><span>♦️ Diamond</span><span id="profile-diamond">0</span></div>
+        <div class="balance-row"><span>🌀 Spins</span><span id="profile-spins">0</span></div>
+        <div class="balance-row"><span>🔑 Keys</span><span id="profile-keys">0</span></div>
+      </div>
+
+      <button class="btn-primary" data-action="go-wallet">👛 Open Wallet</button>
+    </section>
+
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav id="bottom-nav">
+      <button class="nav-btn active" data-screen="home"><span class="nav-icon">🏠</span>Home</button>
+      <button class="nav-btn" data-screen="task"><span class="nav-icon">🗺️</span>Task</button>
+      <button class="nav-btn" data-screen="play"><span class="nav-icon">🎮</span>Play</button>
+      <button class="nav-btn" data-screen="refer"><span class="nav-icon">🤝</span>Refer</button>
+      <button class="nav-btn" data-screen="profile"><span class="nav-icon">🙍</span>Profile</button>
+    </nav>
+
+    <!-- ===== SPIN MODAL ===== -->
+    <div class="modal hidden" id="modal-spin">
+      <div class="modal-sheet spin-sheet">
+        <button class="modal-close" data-close="modal-spin">✕</button>
+        <div class="spin-title">✦ LUCKY SPIN ✦</div>
+        <div class="spin-sub">Spin the wheel &amp; win real treasure</div>
+        <div class="stat-row">
+          <div class="stat-box"><span class="stat-icon">💎</span><span id="spin-gems" class="stat-val">0</span><span class="stat-label">Gems</span></div>
+          <div class="stat-box"><span class="stat-icon">💵</span><span id="spin-usdt" class="stat-val">$0.00</span><span class="stat-label">USDT</span></div>
+          <div class="stat-box"><span class="stat-icon">🔑</span><span id="spin-keys" class="stat-val">0</span><span class="stat-label">Keys</span></div>
+          <div class="stat-box"><span class="stat-icon">🌀</span><span id="spin-left" class="stat-val">0</span><span class="stat-label">Spins Left</span></div>
+        </div>
+        <div class="wheel-wrap">
+          <div class="wheel-pointer">▲</div>
+          <svg id="wheel-svg" viewBox="0 0 300 300"></svg>
+        </div>
+        <button class="btn-primary" id="spin-now-btn">🎰 Spin Now</button>
+        <div class="spin-remaining"><span id="spin-remaining-text">0</span> spins remaining</div>
+      </div>
+    </div>
+
+    <!-- ===== WALLET MODAL ===== -->
+    <div class="modal hidden" id="modal-wallet">
+      <div class="modal-sheet">
+        <button class="modal-close" data-close="modal-wallet">✕</button>
+        <div class="modal-title">👛 Wallet</div>
+        <div class="wallet-options">
+          <button class="wallet-option" data-wallet="withdraw">
+            <div class="wallet-option-icon">💵</div>
+            <div><div class="wallet-option-title">Withdraw</div><div class="wallet-option-sub">USDT only</div></div>
+          </button>
+          <button class="wallet-option" data-wallet="convert">
+            <div class="wallet-option-icon">♦️</div>
+            <div><div class="wallet-option-title">Convert</div><div class="wallet-option-sub">Diamond → USDT</div></div>
+          </button>
+        </div>
+        <div id="wallet-form"></div>
+      </div>
+    </div>
+
+    <!-- ===== ADD YOUR OWN TASK MODAL (Exclusive tab) ===== -->
+    <div class="modal hidden" id="modal-add-task">
+      <div class="modal-sheet">
+        <button class="modal-close" data-close="modal-add-task">✕</button>
+        <div class="modal-title">📜 Add Your Own Task</div>
+        <p class="modal-text">To post your own task here, please contact admin.</p>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/spin-wheel.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

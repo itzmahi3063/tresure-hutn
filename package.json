@@ -1,0 +1,17 @@
+{
+  "name": "treasure-hunt",
+  "version": "1.0.0",
+  "description": "Treasure Hunt - Telegram Mini App (plain Node.js + MongoDB, deployed on Vercel)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "seed:admin-check": "node scripts/check-env.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "mongoose": "^8.5.0"
+  },
+  "license": "UNLICENSED"
+}
